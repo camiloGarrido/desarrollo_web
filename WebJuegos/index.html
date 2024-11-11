@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      let resultados = [];
+      function agregarResultado(user, bot, result) {
+        let json = {
+          usuario: obtenerNombre(user),
+          maquina: obtenerNombre(bot),
+          resultado: result,
+        };
+        resultados.push(json);
+      }
+      function mostrarResultados() {
+        for (let i = 0; i < resultados.length; i++) {
+          const item = resultados[i];
+          console.log(
+            `Juego número ${i + 1} \t Eleccion Jugador: ${
+              item.usuario
+            } \t  Eleccion maquina: ${item.maquina} \t Ganador: ${
+              item.resultado
+            }`
+          );
+        }
+      }
+      function obtenerEleccionMaquina() {
+        return Math.floor(Math.random() * 3) + 1;
+      }
+      function obtenerNombre(opcion) {
+        if (opcion == "1") {
+          return "Tijeras";
+        } else if (opcion == "2") {
+          return "Papel";
+        } else {
+          return "Piedra";
+        }
+      }
+
+      function jugar() {
+        console.log("Ingrese 1 tijeras");
+        console.log("Ingrese 2 papel");
+        console.log("Ingrese 3 piedra");
+        let jugador = prompt("Ingrese una opción");
+        if (parseInt(jugador) > 3) return console.log("opcion mal ingresada");
+
+        let maquina = obtenerEleccionMaquina();
+        let result = "";
+        if (jugador == maquina) {
+          result = "Empate";
+        } else if (jugador == 1) {
+          if (maquina == 2) {
+            result = "Ganador";
+          } else {
+            result = "Perdedor";
+          }
+        } else if (jugador == 2) {
+          if (maquina == 3) {
+            result = "Ganador";
+          } else {
+            result = "Perdedor";
+          }
+        } else if (jugador == 3) {
+          if (maquina == 1) {
+            result = "Ganador";
+          } else {
+            result = "Perdedor";
+          }
+        }
+        console.log(
+          `Eleccion Jugador: ${obtenerNombre(
+            jugador
+          )}  Eleccion maquina: ${obtenerNombre(maquina)} Ganador: ${result}`
+        );
+        agregarResultado(jugador, maquina, result);
+      }
+      function initGame() {
+        let menu;
+        do {
+          console.warn(
+            "***********************Ingreso al Menú**************************"
+          );
+          console.log("Opcion 1 Jugar");
+          console.log("Opcion 2 ver historial");
+          console.log("Opcion 3 Salir");
+          menu = prompt("Ingrese una opcion del menú");
+
+          switch (menu) {
+            case "1":
+              console.clear();
+              jugar();
+              break;
+            case "2":
+              console.clear();
+              mostrarResultados();
+              break;
+            case "3":
+              console.log("Salir");
+              break;
+            default:
+              console.log("opcion no disponible");
+              break;
+          }
+        } while (menu != 3);
+      }
+      jugar();
+    </script>
+  </head>
+  <body></body>
+</html>
